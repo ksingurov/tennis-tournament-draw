@@ -1,5 +1,6 @@
 from __future__ import annotations
-from dataclasses import dataclass
+from dataclasses import dataclass, asdict
+import json
 from typing import Optional
 
 
@@ -40,6 +41,13 @@ class Match:
         if not all(isinstance(x, int) for x in value):
             raise ValueError("Each player must be an int")
         self._players_input = value
+    
+    @classmethod
+    def from_json(cls, data: str) -> Match:
+        return cls(**json.loads(data))
+    
+    def to_json(self):
+        return json.dumps(asdict(self))
 
 
 def power_of_2(N: int) -> int | None:
@@ -87,9 +95,14 @@ def build_draw(players: list[int], max_rounds: str | int = 'all') -> list[Match]
     return all_matches
 
 
+def list_to_json(matches: list[Match]) -> str:
+    return json.dumps([m.to_json() for m in matches])
+
+
 if __name__ == "__main__":
     N = 8
     players = list(range(1, N + 1))
     draw = build_draw(players=players, max_rounds=1)
     for m in draw:
         print(m)
+
