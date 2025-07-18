@@ -1,7 +1,5 @@
 # UTILS for Match class 
-from match.match import Match
-from player.player import Player
-from draw_constants import SEEDS_TIERS, SEEDED_DRAW_POSITIONS, N_PLAYERS, N_SEEDS
+from match.core import Match
 import json
 
 
